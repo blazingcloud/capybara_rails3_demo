@@ -33,5 +33,6 @@ group :development, :test do
   gem 'database_cleaner', '~>0.6.6'
   gem 'factory_girl_rails', '~>1.0.1'
   gem 'sauce', '~>0.18.1'
+  gem 'launchy', '~>0.3.7'
 end
 

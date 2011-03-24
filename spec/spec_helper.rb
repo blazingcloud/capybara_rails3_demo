@@ -36,7 +36,13 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
 
-  config.exclusion_filter = {:js => true} unless USE_SELENIUM
+  if USE_SELENIUM
+    # For tests that won't pass if JavaScript is enabled
+    config.exclusion_filter = {:skip_js => true}
+  else
+    # For tests that require JavaScript to pass
+    config.exclusion_filter = {:require_js => true}
+  end
   #config.filter = { :focus => true }
   
   # transactional fixtures make Selenium an unhappy camper

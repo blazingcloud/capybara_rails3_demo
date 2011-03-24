@@ -46,7 +46,7 @@ describe "Mangaging assignments from a course page", :js => USE_SELENIUM do
           @title = "In the mountains, you are beguiled by mysterious music" 
         end
         
-        describe "without datepicker", :js => false do
+        describe "without datepicker", :skip_js => true do
           before do
             fill_in 'assignment_due_on', :with => "2010-02-05"
             fill_in "Description", :with => @title
@@ -63,7 +63,7 @@ describe "Mangaging assignments from a course page", :js => USE_SELENIUM do
           end
         end
 
-        describe "using the datepicker to enter dates", :js => true do
+        describe "using the datepicker to enter dates", :require_js => true do
           before do
             fill_in "Description", :with => @title
             fill_in 'assignment_due_on', :with => "2010-02-05"
