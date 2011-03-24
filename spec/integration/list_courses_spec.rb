@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "list courses" do
+describe "list courses", :js => true do
 
   context "with 3 people" do
     before do
