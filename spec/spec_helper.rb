@@ -6,6 +6,24 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara/rails'
 
+sauce_user = ENV["SAUCE_USERNAME"]
+sauce_key = ENV["SAUCE_ACCESS_KEY"]
+
+if sauce_user && sauce_key
+  require 'sauce'
+  require 'sauce/capybara'
+  Sauce.config do |conf|
+    conf.username = sauce_user
+    conf.access_key = sauce_key
+    conf.browsers = [
+        ["Windows 2003", "firefox", "3.6."],
+    ]
+  end
+
+  Capybara.default_driver = :sauce
+end
+
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -46,5 +64,4 @@ RSpec.configure do |config|
   #config.use_transactional_fixtures = true
 
 end
-
 
