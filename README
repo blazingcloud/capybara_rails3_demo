@@ -1,0 +1,48 @@
+
+rails new class_app_new
+cd class_app_new/
+vi Gemfile 
+
+group :development, :test do
+   gem 'rspec-rails'
+   gem 'capybara'
+end
+
+bundle
+
+rails g rspec:install
+
+rails g rspec:integration manage_courses
+
+
+$ rails g model course name:string description:text
+      invoke  active_record
+      create    db/migrate/20110318174916_create_courses.rb
+      create    app/models/course.rb
+      invoke    rspec
+      create      spec/models/course_spec.rb
+ 
+===> edit spec to verify we can create a Course with text and description
+
+rake spec
+
+add to config/routes.rb
+  match 'courses' => "courses#index"
+
+rake spec
+
+rails g controller courses
+
+rake spec: AbstractController::ActionNotFound
+
+touch app/views/courses/index.html.erb
+
+rake spec: page.should have_content
+
+# edit view and add controller index action
+# remove helper since we're not using it yet
+
+
+
+
+

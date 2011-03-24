@@ -1,0 +1,38 @@
+<% content_for :head do %>
+  <script>
+    $(function() {
+      $( ".datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+    });
+  </script>
+<% end %>
+
+<h1>howdy</h1>
+<%= form_for([@course, @assignment]) do |f| %>
+  <% if @assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+
+      <ul>
+      <% @assignment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :assigned_on %><br />
+    <%= f.text_field :assigned_on, :class => 'datepicker' %>
+  </div>
+  <div class="field">
+    <%= f.label :due_on %><br />
+    <%= f.text_field :due_on, :class => 'datepicker' %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

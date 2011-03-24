@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Little Schoolhouse</title>
+  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag '/javascripts/stylesheets/jquery-ui.css' %>
+  <%= javascript_include_tag :all %>
+  <%= csrf_meta_tag %>
+  <%= yield :head %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

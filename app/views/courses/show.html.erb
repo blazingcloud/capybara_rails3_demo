@@ -1,0 +1,15 @@
+<h1>Course <%= @course.name %></h1>
+
+<p><%= @course.description %></p>
+
+<h2>Assignments</h2>
+
+<ul>
+  <% @course.assignments.each do |assignment| %>
+    <li>
+      <%= link_to(assignment.to_s, edit_course_assignment_path(@course.id, assignment.id)) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Create a new assignment", new_course_assignment_path(@course) %>
