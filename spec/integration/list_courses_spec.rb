@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "list courses", :js => true do
+describe "list courses", :js => USE_SELENIUM do
 
   context "with 3 people" do
     before do
@@ -23,3 +23,4 @@ describe "list courses", :js => true do
   end
 
 end
+

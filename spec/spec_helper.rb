@@ -9,7 +9,12 @@ require 'capybara/rails'
 sauce_user = ENV["SAUCE_USERNAME"]
 sauce_key = ENV["SAUCE_ACCESS_KEY"]
 
+USE_SELENIUM = ENV["USE_SELENIUM"] || (sauce_user && sauce_key)
+
 if sauce_user && sauce_key
+  #This is kind of weird -- the Sauce gem looks for this in its own namespace
+  #Sauce::Selenium::WebDriver = ::Selenium::WebDriver
+
   require 'sauce'
   require 'sauce/capybara'
   Sauce.config do |conf|
@@ -17,6 +22,7 @@ if sauce_user && sauce_key
     conf.access_key = sauce_key
     conf.browsers = [
         ["Windows 2003", "firefox", "3.6."],
+        #["Linux", "firefox", "3.6."]
     ]
   end
 
@@ -30,6 +36,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
 
+  config.exclusion_filter = {:js => true} unless USE_SELENIUM
+  #config.filter = { :focus => true }
+  
   # transactional fixtures make Selenium an unhappy camper
   config.use_transactional_fixtures = false
 

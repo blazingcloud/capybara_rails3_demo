@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Mangaging assignments from a course page" do
+describe "Mangaging assignments from a course page", :js => USE_SELENIUM do
   describe "When going to a course page" do
     attr_reader :course
     before do
@@ -44,19 +44,43 @@ describe "Mangaging assignments from a course page" do
       describe "and entering valid data" do
         before do
           @title = "In the mountains, you are beguiled by mysterious music" 
-          fill_in 'assignment_due_on', :with => "2010-02-05"
-          fill_in "Description", :with => @title
-          click_button "Create Assignment"
+        end
+        
+        describe "without datepicker", :js => false do
+          before do
+            fill_in 'assignment_due_on', :with => "2010-02-05"
+            fill_in "Description", :with => @title
+            click_button "Create Assignment"
+          end
+
+          it "should create the assignment" do
+            Assignment.find_by_description(@title).should_not be_nil
+          end
+
+          it "should display the course page with the new assignment" do
+            current_path.should == "/courses/#{course.id}"
+            page.should have_content("2010-02-05: In the mountains, you are beguiled by mysterious music")
+          end
         end
 
-        it "should create the assignment" do
-          Assignment.find_by_description(@title).should_not be_nil
+        describe "using the datepicker to enter dates", :js => true do
+          before do
+            fill_in "Description", :with => @title
+            fill_in 'assignment_due_on', :with => "2010-02-05"
+            @month = page.evaluate_script("$('div.ui-datepicker-title span.ui-datepicker-month').text()")
+            page.execute_script("$('table.ui-datepicker-calendar tbody tr td a:contains(\"18\")').click()")
+            @selected_date = page.find('#assignment_due_on').value
+            click_button "Create Assignment"
+          end
+
+          it "should save with the datepicker selected date" do
+            @month.should == "February"
+            @selected_date.should == "2010-02-18"
+            current_path.should == "/courses/#{course.id}"
+            page.should have_content("2010-02-18: In the mountains, you are beguiled by mysterious music")
+          end
         end
 
-        it "should display the course page with the new assignment" do
-          current_path.should == "/courses/#{course.id}"
-          page.should have_content("2010-02-05: In the mountains, you are beguiled by mysterious music")
-        end
       end
 
     end
