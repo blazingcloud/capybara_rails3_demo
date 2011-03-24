@@ -13,8 +13,6 @@ if sauce_user && sauce_key
   require 'sauce'
   require 'sauce/capybara'
   Sauce.config do |conf|
-    conf.username = sauce_user
-    conf.access_key = sauce_key
     conf.browsers = [
         ["Windows 2003", "firefox", "3.6."],
     ]

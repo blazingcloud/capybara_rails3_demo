@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Mangaging assignments from a course page" do
+describe "Mangaging assignments from a course page", :js => true do
   describe "When going to a course page" do
     attr_reader :course
     before do
