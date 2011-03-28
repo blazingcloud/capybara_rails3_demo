@@ -42,6 +42,7 @@ RSpec.configure do |config|
   else
     # For tests that require JavaScript to pass
     config.exclusion_filter = {:require_js => true}
+    Capybara.current_driver = :rack_test
   end
   #config.filter = { :focus => true }
   
